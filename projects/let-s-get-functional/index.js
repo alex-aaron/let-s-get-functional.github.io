@@ -16,26 +16,89 @@ var _ = require('underbar');
  *
  * 4. To test your work, run the following command in your terminal:
  *
- *    npm start --prefix ./let-s-get-functional.github.io/projects/let-s-get-functional
+ *    npm start --prefix ./projects/let-s-get-functional
  *
  *    IMPORTANT: Make sure you replace <YOUR_GITHUB_FOLDER with your actual github folder name that is in your workspace.
  */
 
 var maleCount = function(array) {
-
+  return array.filter(customer => customer.gender === 'male').length;
 };
 
-var femaleCount;
+var femaleCount = function(array) {
+  return array.reduce((acc, curr) => {
+    if (curr.gender === 'female') {
+      acc++;
+    }
+    return acc;
+  }, 0);
+};
 
-var oldestCustomer;
+var oldestCustomer = function(array) {
+  const old = array.reduce((acc, curr) => {
+    if (acc.age < curr.age) {
+      return curr;
+    } else {
+      return acc;
+    }
+  });
+  return old.name;
+};
 
-var youngestCustomer;
+var youngestCustomer = function(array) {
+  const young = array.reduce((acc, curr) => {
+    if (acc.age < curr.age) {
+      return acc;
+    } else {
+      return curr;
+    }
+  });
 
-var averageBalance;
+  return young.name;
+};
 
-var firstLetterCount;
+var averageBalance = function(array) {
+  // get total of customers balance
+  // calculate average -> total / array.length
+  // return average
 
-var friendFirstLetterCount;
+  let total = array.reduce((acc, curr) => {
+    let rightBalance = curr.balance.replace(/[$, ,]/g, "");
+    // console.log('rightBalance: ', rightBalance);
+    return acc + parseFloat(rightBalance);
+  }, 0);
+
+  // console.log('TOTAL: ', total);
+  return (total / array.length);
+};
+
+// array = array of customer objects
+// letter = whatever letter we are trying to find
+// output number
+var firstLetterCount = function(array, letter) {
+  let firstLetterOccurences = array.reduce((acc, curr) => {
+    if (curr.name[0].toLowerCase() === letter.toLowerCase()) {
+      acc += 1;
+    }
+    return acc;
+  }, 0)
+  return firstLetterOccurences;
+};
+
+// array = array of customer objects
+// customer = given customer = "Doris Smith"
+// letter = whatever letter of the customer's friend we are trying to find = "B"
+// output = number
+var friendFirstLetterCount = function(array, customer, letter) {
+  let foundCustomer = array.find((name) => name === customer);
+  let customersFriendFirstLetter = foundCustomer.friends.reduce((acc, curr) => {
+    if (curr.name[0].toLowerCase() === letter.toLowerCase()) {
+      acc += 1;
+    }
+    return acc;
+  }, 0)
+  return customersFriendFirstLetter;
+};
 
 var friendsCount;
 
