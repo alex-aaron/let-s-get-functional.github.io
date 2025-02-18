@@ -26,7 +26,12 @@ var maleCount = function(array) {
 };
 
 var femaleCount = function(array) {
-  return array.filter(customer => customer.gender === 'female').length;
+  return array.reduce((acc, curr) => {
+    if (curr.gender === 'female') {
+      acc++;
+    }
+    return acc;
+  }, 0);
 };
 
 var oldestCustomer;
