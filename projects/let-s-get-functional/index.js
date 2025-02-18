@@ -34,11 +34,43 @@ var femaleCount = function(array) {
   }, 0);
 };
 
-var oldestCustomer;
+var oldestCustomer = function(array) {
+  const old = array.reduce((acc, curr) => {
+    if (acc.age < curr.age) {
+      return curr;
+    } else {
+      return acc;
+    }
+  });
+  return old.name;
+};
 
-var youngestCustomer;
+var youngestCustomer = function(array) {
+  const young = array.reduce((acc, curr) => {
+    if (acc.age < curr.age) {
+      return acc;
+    } else {
+      return curr;
+    }
+  });
 
-var averageBalance;
+  return young.name;
+};
+
+var averageBalance = function(array) {
+  // get total of customers balance
+  // calculate average -> total / array.length
+  // return average
+
+  let total = array.reduce((acc, curr) => {
+    let rightBalance = curr.balance.replace(/[$, ,]/g, "");
+    // console.log('rightBalance: ', rightBalance);
+    return acc + parseFloat(rightBalance);
+  }, 0);
+
+  // console.log('TOTAL: ', total);
+  return (total / array.length);
+};
 
 var firstLetterCount;
 
