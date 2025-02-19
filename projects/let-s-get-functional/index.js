@@ -90,14 +90,17 @@ var firstLetterCount = function(array, letter) {
 // letter = whatever letter of the customer's friend we are trying to find = "B"
 // output = number
 var friendFirstLetterCount = function(array, customer, letter) {
-  let foundCustomer = array.find((name) => name === customer);
-  let customersFriendFirstLetter = foundCustomer.friends.reduce((acc, curr) => {
-    if (curr.name[0].toLowerCase() === letter.toLowerCase()) {
-      acc += 1;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].name === customer) {
+      let customersFriendFirstLetter = array[i].friends.reduce((acc, curr) => {
+        if (curr.name[0].toLowerCase() === letter.toLowerCase()) {
+          acc += 1;
+        }
+        return acc;
+      }, 0)
+      return customersFriendFirstLetter;
     }
-    return acc;
-  }, 0)
-  return customersFriendFirstLetter;
+  }
 };
 
 var friendsCount;
