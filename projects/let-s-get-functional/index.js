@@ -22,26 +22,131 @@ var _ = require('underbar');
  */
 
 var maleCount = function(array) {
-
+  return array.filter(customer => customer.gender === 'male').length;
 };
 
-var femaleCount;
+var femaleCount = function(array) {
+  return array.reduce((acc, curr) => {
+    if (curr.gender === 'female') {
+      acc++;
+    }
+    return acc;
+  }, 0);
+};
 
-var oldestCustomer;
+var oldestCustomer = function(array) {
+  const old = array.reduce((acc, curr) => {
+    if (acc.age < curr.age) {
+      return curr;
+    } else {
+      return acc;
+    }
+  });
+  return old.name;
+};
 
-var youngestCustomer;
+var youngestCustomer = function(array) {
+  const young = array.reduce((acc, curr) => {
+    if (acc.age < curr.age) {
+      return acc;
+    } else {
+      return curr;
+    }
+  });
 
-var averageBalance;
+  return young.name;
+};
 
-var firstLetterCount;
+var averageBalance = function(array) {
+  // get total of customers balance
+  // calculate average -> total / array.length
+  // return average
 
-var friendFirstLetterCount;
+  let total = array.reduce((acc, curr) => {
+    let rightBalance = curr.balance.replace(/[$, ,]/g, "");
+    // console.log('rightBalance: ', rightBalance);
+    return acc + parseFloat(rightBalance);
+  }, 0);
 
-var friendsCount;
+  // console.log('TOTAL: ', total);
+  return (total / array.length);
+};
 
-var topThreeTags;
+var firstLetterCount = (array, letter) => {
+  let firstLetterOccurrences = array.reduce((acc, curr) => {
+    if (curr.name[0].toLowerCase() === letter.toLowerCase()) {
+      acc += 1;
+    }
+    return acc;
+  }, 0)
+  return firstLetterOccurrences;
+};;
 
-var genderCount;
+var friendFirstLetterCount = (array, customer, letter) => {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].name === customer) {
+      let customersFriendFirstLetter = array[i].friends.reduce((acc, curr) => {
+        if (curr.name[0].toLowerCase() === letter.toLowerCase()) {
+          acc += 1;
+        }
+        return acc;
+      }, 0)
+      return customersFriendFirstLetter;
+    }
+  }
+};
+
+var friendsCount = function(array, name) {
+  let customerFriends = array.reduce((acc, curr) => {
+    if (curr.friends.some(obj => obj.name === name)) {
+      acc.push(curr.name)
+    }
+    return acc;
+  }, [])
+  return customerFriends;
+};
+
+var topThreeTags = function(array) {
+  let tagCount = {};
+
+  for (let i = 0; i < array.length; i++) {
+
+    for (let j = 0; j < array[i].tags.length; j++) {
+      
+      if (tagCount.hasOwnProperty(array[i].tags[j])) {
+        tagCount[array[i].tags[j]] += 1;
+      } else {
+        tagCount[array[i].tags[j]] = 1;
+      }
+    }
+  }
+
+  let tagCountArr = [];
+  
+  for (let tags in tagCount) {
+    tagCountArr.push([tags, tagCount[tags]]);
+  }
+  
+  const sortedArr = tagCountArr.sort((a, b) => b[1] - a[1]);
+ 
+  const output = [];
+  for (let i = 0; i < 3; i++) {
+    output.push(sortedArr[i][0])
+  }
+  return output;
+};
+
+var genderCount = function(array) {
+  const genderObj = array.reduce((acc, curr) => {
+    if (acc.hasOwnProperty(curr.gender)) {
+      acc[curr.gender] += 1
+    } else {
+      acc[curr.gender] = 1;
+    }
+    return acc;
+  }, {})
+  return genderObj;
+};
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////
