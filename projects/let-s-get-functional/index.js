@@ -72,15 +72,81 @@ var averageBalance = function(array) {
   return (total / array.length);
 };
 
-var firstLetterCount;
+var firstLetterCount = (array, letter) => {
+  let firstLetterOccurrences = array.reduce((acc, curr) => {
+    if (curr.name[0].toLowerCase() === letter.toLowerCase()) {
+      acc += 1;
+    }
+    return acc;
+  }, 0)
+  return firstLetterOccurrences;
+};;
 
-var friendFirstLetterCount;
+var friendFirstLetterCount = (array, customer, letter) => {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].name === customer) {
+      let customersFriendFirstLetter = array[i].friends.reduce((acc, curr) => {
+        if (curr.name[0].toLowerCase() === letter.toLowerCase()) {
+          acc += 1;
+        }
+        return acc;
+      }, 0)
+      return customersFriendFirstLetter;
+    }
+  }
+};
 
-var friendsCount;
+var friendsCount = function(array, name) {
+  let customerFriends = array.reduce((acc, curr) => {
+    if (curr.friends.some(obj => obj.name === name)) {
+      acc.push(curr.name)
+    }
+    return acc;
+  }, [])
+  return customerFriends;
+};
 
-var topThreeTags;
+var topThreeTags = function(array) {
+  let tagCount = {};
 
-var genderCount;
+  for (let i = 0; i < array.length; i++) {
+
+    for (let j = 0; j < array[i].tags.length; j++) {
+      
+      if (tagCount.hasOwnProperty(array[i].tags[j])) {
+        tagCount[array[i].tags[j]] += 1;
+      } else {
+        tagCount[array[i].tags[j]] = 1;
+      }
+    }
+  }
+
+  let tagCountArr = [];
+  
+  for (let tags in tagCount) {
+    tagCountArr.push([tags, tagCount[tags]]);
+  }
+  
+  const sortedArr = tagCountArr.sort((a, b) => b[1] - a[1]);
+ 
+  const output = [];
+  for (let i = 0; i < 3; i++) {
+    output.push(sortedArr[i][0])
+  }
+  return output;
+};
+
+var genderCount = function(array) {
+  const genderObj = array.reduce((acc, curr) => {
+    if (acc.hasOwnProperty(curr.gender)) {
+      acc[curr.gender] += 1
+    } else {
+      acc[curr.gender] = 1;
+    }
+    return acc;
+  }, {})
+  return genderObj;
+};
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////
