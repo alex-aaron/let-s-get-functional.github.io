@@ -103,11 +103,73 @@ var friendFirstLetterCount = function(array, customer, letter) {
   }
 };
 
-var friendsCount;
+// array = array of customer objects
+// name = name of the target friend
+// output = array
+var friendsCount = function(array, name) {
+  // we need access to the array's indexes
+  // each index in the array is an object
+  // we need access to the friends key's value which is an array of objects
+  // check if any of the name properties === name
+  // if it does, push the actual customer's name to the acc
+  let customerFriends = array.reduce((acc, curr) => {
+    if (curr.friends.some(obj => obj.name === name)) {
+      acc.push(curr.name)
+    }
+    return acc;
+  }, [])
+  return customerFriends;
+};
 
-var topThreeTags;
+// array = array of customer objects
+// output = array of top 3 tags
+var topThreeTags = function(array) {
+  // create empty object
+  let tagCount = {};
+  // loop through array
+  for (let i = 0; i < array.length; i++) {
+    // loop through tags
+    for (let j = 0; j < array[i].tags.length; j++) {
+      // set each tag as a key in empty object if its the first time seeing it
+      // increment each key's value every single time we hit the occurrence
+      if (tagCount.hasOwnProperty(array[i].tags[j])) {
+        tagCount[array[i].tags[j]] += 1;
+      } else {
+        tagCount[array[i].tags[j]] = 1;
+      }
+    }
+  }
+  // initialize an empty array
+  let tagCountArr = [];
+  // iterate the tagCount object and push a tuple (mini arr) the first index is the tag and the second is the number
+  // ex:  [[cupidatat, 1], [do, 2]]
+  for (let tags in tagCount) {
+    tagCountArr.push([tags, tagCount[tags]]);
+  }
+  // sort the array
+  const sortedArr = tagCountArr.sort((a, b) => b[1] - a[1]);
+  // initialize a new empty array
+  const output = [];
+  for (let i = 0; i < 3; i++) {
+    output.push(sortedArr[i][0])
+  }
+  return output;
+};
 
-var genderCount;
+// array = array of customer objects
+// output = object where the genders are the keys and the count is the value
+// USE REDUCE
+var genderCount = function(array) {
+  const genderObj = array.reduce((acc, curr) => {
+    if (acc.hasOwnProperty(curr.gender)) {
+      acc[curr.gender] += 1
+    } else {
+      acc[curr.gender] = 1;
+    }
+    return acc;
+  }, {})
+  return genderObj;
+};
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////
