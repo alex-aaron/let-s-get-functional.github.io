@@ -1,4 +1,5 @@
-const data = [{
+const data = [
+  {
   "_id": "555e4125afb26872ac1cb814",
   "index": 0,
   "guid": "e7bd5b56-43d3-41cb-9742-aee4408a36c2",
@@ -279,3 +280,5 @@ const data = [{
   "greeting": "Hello, Doris Smith! You have 10 unread messages.",
   "favoriteFruit": "banana"
 }];
+
+// const data = []
